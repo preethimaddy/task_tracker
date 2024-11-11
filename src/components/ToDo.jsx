@@ -2,6 +2,14 @@ import React from 'react'
 import EditTask from './EditTask'
 
 const ToDo = ({task,index, taskList,setTaskList,}) => {
+
+  const handleDelete=(itemID)=>{
+    let removeIndex = taskList.indexOf(task);
+    taskList.splice(removeIndex,1);
+    setTaskList(currentTasks =>currentTasks.filter
+      (todo =>todo.id !== itemID)
+    )
+  }
   return (
     <>
 
@@ -13,7 +21,10 @@ const ToDo = ({task,index, taskList,setTaskList,}) => {
    </div>
     <p className='text-lg py-2'>{task.taskDescription}</p>
     <div>
-      <button className='bg-red-500 text-white text-sm uppercase font-semibold py-1.5 px-3'>Delete</button>
+      <button className='bg-red-500 text-white text-sm 
+      uppercase font-semibold py-1.5 px-3'
+onClick={handleDelete}
+      >Delete</button>
     </div>
     </div>
    

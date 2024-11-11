@@ -13,11 +13,11 @@ function App() {
    <AddTask taskList={taskList} setTaskList={setTaskList}/>
     <p className='text-xl my-2'>to add a new task</p>
    </div>
-   {taskList.map((task,i)=>
+   {taskList.slice(0).reverse().map((task,i)=>
    
   <>
 
-  <ToDo  key ={i} task={task} index={i} taskList={taskList} setTaskList={setTaskList} />
+  <ToDo task={task} index={i} taskList={taskList} setTaskList={setTaskList} />
   </>)}
    
    </>
