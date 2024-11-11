@@ -17,7 +17,7 @@ function App() {
    
   <>
 
-  <ToDo  key ={i} task={task} />
+  <ToDo  key ={i} task={task} index={i} taskList={taskList} setTaskList={setTaskList} />
   </>)}
    
    </>
