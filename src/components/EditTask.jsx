@@ -20,11 +20,17 @@ if(name === "projectName") setProjectName(value)
 const handleUpdate = (e) => {
     e.preventDefault();
 let taskIndex = taskList.indexOf(task);
-taskList.splice(taskIndex,1);
-setTaskList([...taskList, {projectName, taskDescription}],
-    setEditModal(false)
+taskList.splice(taskIndex,1,
+  {projectName:projectName,
+    taskDescription:taskDescription,
+    timestamp: task.timestamp,
+    duration: task.duration
+  }
 );
-    
+localStorage.setItem(JSON.stringify(taskList))
+window.location.reload();
+    setEditModal(false)
+
   };
   return (
   <>

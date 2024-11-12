@@ -12,7 +12,9 @@ const AddTask = ({ taskList, setTaskList }) => {
   const handleInput = (e) => {
     const { name, value } = e.target;
 
-    if (name === "projectName") setProjectName(value);
+    if (name === "projectName") 
+      setProjectName(value);
+    setErrorMessage(""); // if the project name is not empty
     if(name === "projectName" && value === ""){
       setErrorMessage("Enter project Name to continue..")
     }
@@ -23,8 +25,18 @@ const AddTask = ({ taskList, setTaskList }) => {
     if(!projectName){
       setErrorMessage("Enter project Name to continue..")
     } else {
+      let timestamp = new Date();
+      let tempList =taskList;
+      tempList.push({
+        projectName,
+        taskDescription,
+        timestamp:timestamp,
+        duration:0,
+      })
+      localStorage.setItem("taskList",JSON.stringify(tempList))
+    window.location.reload()
       setTaskList([...taskList, 
-        { projectName, taskDescription }]);
+        { projectName, taskDescription, timestamp:timestamp }]);
       setAddModal(false);
       setProjectName("");
       setTaskDescription("");

@@ -1,9 +1,17 @@
 import './App.css';
 import AddTask from './components/AddTask';
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import ToDo from './components/ToDo';
 function App() {
-  const[taskList, setTaskList] = useState([])
+  const[taskList, setTaskList] = useState([]);
+  
+  useEffect(()=>{
+let array = localStorage.getItem("taskList")
+
+if(array){
+  setTaskList(JSON.parse(array))
+}
+  },[])
   return (
    <>
    <h1 className='text-2xl font-bold py-4 pl-6'>The Task Tracker</h1>
@@ -12,13 +20,14 @@ function App() {
    <p className='text-xl pl-6'>Click </p>
    <AddTask taskList={taskList} setTaskList={setTaskList}/>
     <p className='text-xl my-2'>to add a new task</p>
+  
    </div>
-   {taskList.slice(0).reverse().map((task,i)=>
-   
-  <>
+   <div className='flex flex-col items-start
+    justify-start bg-white my-4 ml-6 py-4 px-6 w-3/4 max-w-lg'>ToDo</div>
+   {taskList.map((task,i)=>
 
-  <ToDo task={task} index={i} taskList={taskList} setTaskList={setTaskList} />
-  </>)}
+  <ToDo task={task} key={i} taskList={taskList} setTaskList={setTaskList} />
+)}
    
    </>
   );
