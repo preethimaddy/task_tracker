@@ -1,30 +1,38 @@
 import React, { useState } from "react";
 
-const AddTask = ({taskList, setTaskList}) => {
+const AddTask = ({ taskList, setTaskList }) => {
   const [addModal, setAddModal] = useState(false);
 
-const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState("");
 
-const[taskDescription, setTaskDescription] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
 
-const handleInput =(e)=>{
-const{name,value} = e.target;
+  const[errorMessage, setErrorMessage] = useState("")
 
-if(name === "projectName") setProjectName(value)
-    if(name === "taskDescription") setTaskDescription(value);
-}
-  const handleAdd =(e)=>{
-    
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "projectName") setProjectName(value);
+    if(name === "projectName" && value === ""){
+      setErrorMessage("Enter project Name to continue..")
+    }
+    if (name === "taskDescription") setTaskDescription(value);
+  };
+  const handleAdd = (e) => {
     e.preventDefault();
-   // console.log("Adding task:", task);
-    setTaskList(
-        [...taskList, {projectName,taskDescription}],
-    );
-    setAddModal(false);
-    setProjectName("");
-    setTaskDescription("")
-
-  }
+    if(!projectName){
+      setErrorMessage("Enter project Name to continue..")
+    } else {
+      setTaskList([...taskList, 
+        { projectName, taskDescription }]);
+      setAddModal(false);
+      setProjectName("");
+      setTaskDescription("");
+    }
+   
+  
+    
+  };
   return (
     <>
       <button
@@ -37,13 +45,16 @@ if(name === "projectName") setProjectName(value)
       {addModal ? (
         <>
           <div
-            className="flex items-center justify-center
-            overflow-x-hidden overflow-y-auto fixed inset-0 z-100"
+            className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-100"
           >
-            <div className="w-9/12 max-w-lg bg-white border rounded lg-shadow-md relative
-             flex flex-col">
-              <div className="flex flex-row 
-              justify-between p-5 border-b border-slate-200 rounded-t bg-white">
+            <div
+              className="w-9/12 max-w-lg bg-white border rounded lg-shadow-md relative
+             flex flex-col"
+            >
+              <div
+                className="flex flex-row 
+              justify-between p-5 border-b border-slate-200 rounded-t bg-white"
+              >
                 <h3 className="text-3xl font-semibold">Add New Task</h3>
                 <button
                   className="px-1 text-gray-400 float-right text-3xl
@@ -65,7 +76,7 @@ if(name === "projectName") setProjectName(value)
                   <input
                     className="w-full bg-gray-200
                     text-gray-700 border
-                    border-gray rounded py-3 px-4 mb-5
+                    border-gray rounded py-3 px-4 
                     leading-tight focus:outline-none
                     focus:bg-white"
                     id="project-name"
@@ -76,40 +87,41 @@ if(name === "projectName") setProjectName(value)
                     onChange={handleInput}
                     required
                   />
+                  <p className="text-red-500 text-center mt-2 mb-5">{errorMessage}</p>
                   <label
-              className="track-wide uppercase text-gray-700
+                    className="track-wide uppercase text-gray-700
                     text-xs font-semibold mb-2 block"
-              htmlFor="project-name"
-            >
-              Task Description
-            </label>
-            <textarea
-              className="w-full bg-gray-200
+                    htmlFor="project-name"
+                  >
+                    Task Description
+                  </label>
+                  <textarea
+                    className="w-full bg-gray-200
               text-gray-700 border
               border-gray rounded py-3 px-4 mb-5
               leading-tight focus:outline-none
               focus:bg-white"
-              id="task-description"
-              name="taskDescription"
-              rows="5"
-              placeholder="Task Description.."
-              value={taskDescription}
-              onChange={handleInput}
-            />
+                    id="task-description"
+                    name="taskDescription"
+                    rows="5"
+                    placeholder="Task Description.."
+                    value={taskDescription}
+                    onChange={handleInput}
+                  />
                 </form>
                 <div className="flex justify-end p-6 border-t border-slate-200  rounded-b">
-                    <button className="bg-blue-500
+                  <button
+                    className="bg-blue-500
                     text-white font-semibold uppercase text-sm
                     px-6 py-3 rounded hover:opacity:70"
-                    onClick={handleAdd}>
-                        Add Task
-                    </button>
+                    onClick={handleAdd}
+                  >
+                    Add Task
+                  </button>
                 </div>
               </div>
             </div>
-            
           </div>
-         
         </>
       ) : null}
     </>
